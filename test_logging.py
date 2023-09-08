@@ -6,16 +6,18 @@ import sys
 """
 Import notes:
 # import os              // only required for os.path.basename(__file__) in example below.
-# import logging        //only required for logging.{DEBUG, INFO, WARNING, ERROR, CRITICAL} in example below.
-#                        You can pass integer values instead of logging.{DEBUG, INFO, WARNING, ERROR, CRITICAL} if you prefer.  
-#                        Check the logging module for details.
+                            you could just pass the script name as a string if you prefer.
+# import logging        //only required for setting logging level with logging.{DEBUG, INFO, WARNING, ERROR, CRITICAL} in example below.
+#                               You can pass integer values instead of logging.{DEBUG, INFO, WARNING, ERROR, CRITICAL} if you prefer.  
+                                                integer equivalents:       10,   20,     30,     40,     50
+#                        Check the logging module for details, or keep reading below.
 import laughing_logger //only required to set up logging in ONE LINE OF CODE.  HA HA HA HA !!!!....
 import sys             //only required for sys.exit('HA HA HA!!!...') in example below.
 """
 
 if __name__=="__main__":
     # Logging in ONE LINE OF CODE.   HA HA HA HA !!!!....
-    console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__), logging.DEBUG, logging.ERROR, "test.log")
+    console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__), 10, 50, "test.log")
 
     """ 
     Above sets up tuple of 2 loggers: (console_logger, file_logger)
@@ -38,6 +40,16 @@ if __name__=="__main__":
     file_logger.critical("Something terrible happened in my code")
     sys.exit('HAHAHA')  # exits with return code HAHAHA.
     
+
+    Note about logging levels:  The base logging module has 5 levels: DEBUG, INFO, WARNING, ERROR, CRITICAL.
+    These are set to enums in the logging module.  You can use the enums or the integer values.
+    By using the integer values, you can do away with the logging module import in your own program.
+    Here are the integer values for the logging levels:
+    DEBUG = 10
+    INFO = 20
+    WARNING = 30
+    ERROR = 40
+    CRITICAL = 50
     """
 
 
