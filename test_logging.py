@@ -20,7 +20,7 @@ if __name__=="__main__":
     """ 
     Above sets up tuple of 2 loggers: (console_logger, file_logger)
     console_logger will currently log to console  at DEBUG level because of 'logging.DEBUG' argument
-    file_logger    will currently log to test,log at ERROR level because of 'logging.ERROR' argument
+    file_logger    will currently log to test.log at ERROR level because of 'logging.ERROR' argument
     You can set each logger's level to any of the generic logging levels:DEBUG, INFO, WARNING, ERROR, CRITICAL
 
     Arguments:  
