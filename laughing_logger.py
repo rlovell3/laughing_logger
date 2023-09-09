@@ -1,6 +1,64 @@
+# laughing_logger.py - A Python script to set up logging for your own python scripts.
+# Depends on the logging module.  
 
-import os
+# Copyright 2023 by Ross Lovell.  All Rights Reserved.
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation, and that the name of Ross Lovell
+# not be used in advertising or publicity pertaining to distribution
+# of the software without specific, written prior permission.
+# ROSS LOVELL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
+# ROSS LOVELL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+# IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+
+# The laughing_logger.py depends upon the logging module.  
+# The logging module is part of the standard library.
+# The logging module's license must be honored if you use this code.
+
+# copy of logging module's license:
+# Copyright 2001-2019 by Vinay Sajip. All Rights Reserved.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted,
+# provided that the above copyright notice appear in all copies and that
+# both that copyright notice and this permission notice appear in
+# supporting documentation, and that the name of Vinay Sajip
+# not be used in advertising or publicity pertaining to distribution
+# of the software without specific, written prior permission.
+# VINAY SAJIP DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
+# VINAY SAJIP BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+# IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
+# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+    
+
+# Let's get into it, shall we?   Ha Ha Ha!!!!
 import logging
+from enum import Enum
+
+
+class LaughingLogLevel(Enum):
+    """
+    Simple enumeration of logging levels.  
+    LaughingLogLevel.{DEBUG, INFO, WARNING, ERROR, CRITICAL} 
+    are equivalent to logging.{DEBUG, INFO, WARNING, ERROR, CRITICAL}
+    """
+    DEBUG = 10
+    INFO = 20 
+    WARNING = 30
+    ERROR = 40
+    CRITICAL = 50
+    
+    def __int__(self):
+        return self.value
 
 
 class ScriptNameFilter(logging.Filter):
@@ -21,9 +79,13 @@ def set_up_my_logging(script_name: str, console_log_level: int, file_log_level: 
     Usage:  console_logger, file_logger = set_up_my_logging(os.path.basename(__file__), logging.DEBUG, logging.INFO, "test.log")
     """
     
+    # convert console_log_level and file_log_level to int
+    console_log_level = int(console_log_level)
+    file_log_level = int(file_log_level)
+
+
     # Initialize logging filters
     script_name_filter = ScriptNameFilter(script_name)
-    
     # Create and configure console logger
     console_logger = logging.getLogger("console_logger")
     console_logger.setLevel(console_log_level)
@@ -47,10 +109,10 @@ if __name__ == '__main__':
     Arguments:  calling script name, console_log_level, file_log_level, logfile
     Log_level choices: logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL"""
     
-    #add the following lines to your program.
-    console_logger, file_logger = set_up_my_logging(os.path.basename(__file__), logging.DEBUG, logging.INFO, "test.log")
+    #add the following line to your program.
+    console_logger, file_logger = set_up_my_logging("laughing_logger.py", LaughingLogLevel.DEBUG, LaughingLogLevel.INFO, "test.log")
 
-    # Test loggers
+    # Example loggers to use in your code
     console_logger.debug("This debug msg will appear on the console.")
     console_logger.info("This info msg will appear on the console.")
     console_logger.warning("This warning msg will appear on the console.")
