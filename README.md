@@ -3,7 +3,7 @@
 
 ### BREAKING CHANGES
 This code was initially released on 2023-09-08.  The set_up function was changed later that night
-to handle setting the logging levels without needing to import the logging module.  This is a breaking change.
+to handle setting the logging levels without needing to import the logging module.  This is a breaking change from the original code.
 If you have been using the code from 2023-09-08, you will need to update the language of your arguments to the set_up function.
 See **test_logging.py** for complete details.
 
@@ -12,7 +12,7 @@ See **test_logging.py** for complete details.
 import laughing-logger
 import os
 ```
-You can remove os depending on how you deal with passing the name of your calling script to the setup function.  See **test_logging.py** for complete details.
+You can remove import os depending on how you deal with passing the name of your calling script to the setup function.  See **test_logging.py** for complete details.
 
 ### Usage
 After your imports, simply enter this one-liner to set up your entire logging framework:
@@ -34,7 +34,7 @@ Adjustable Logging levels (in order of detail):
 - logging.DEBUG     Max detail
 - logging.INFO      a bit less detail
 - logging.WARNING   even less detail
-- logging.ERROR     You probably won't ever need this one
+- logging.ERROR     You probably won't ever need this one  (HA HA HAHAAAAAA.....)
 - logging.CRITICAL  For when something breaks and you need to capture any details you can.
 
 Set each logger in the one-line setup command to the levels you want to deal with for debugging.
@@ -44,9 +44,9 @@ to capture only the detail you need.
 You only need to change the one-line setup to adjust the levels of all your logging output.
 
 <br>
-Output is formatted to include the name of the running program and a timestamp (without microseconds).  It is a format that I just ccouldn't find in any of the examples.
+Output is formatted to include the name of the running program and a timestamp (without microseconds).  It is a format that I just ccouldn't find in any of the examples online. Plus, I didn't like having to do it all every time I started a new project.
 <br>
-Formatting is set by this attribute:
+Formatting, if you care, is set by this attribute:
 <br>
 
 ```python
@@ -55,6 +55,7 @@ Formatting is set by this attribute:
 
 <br>
 See test_logging.py for a complete example of importing, setting up, and using.
+HA HA HA HAHAAAAAA...
 
 
 
