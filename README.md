@@ -23,10 +23,7 @@ console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename
 
 ```
 <br>
-You can use integers instad of laughing_logger.LaughingLogLevel.{DEBUG, INFO, WARNING, ERROR, CRITICAL}
-The integers are defined in the logging module as DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50.
-<br>
-That one-line setup gives you two loggers:
+The one-liner gives you two loggers:
 - one for logging to the console
 - one for logging to a file
 
