@@ -41,7 +41,7 @@ For screen and file output that you want whether you are in debug mode or full p
 For example, let's examine these three logging statements buried somewhere in your code:  
 `console_logger.debug(f"debug me: {infile}")`  
 `console_logger.error(f"some error: {infile}")`  
-`console_logger.critical(f"mission critical: {issue}")`
+`console_logger.critical(f"mission critical: {issue}")`  
 Up top, in your instantiation, while your console_logger is set to DEBUG, all three statements will print to console.  
 
 But once you change the level up in the instantiation call to, let's say, ERROR, only the second and third statements will print.  If you change the instantiation call to CRITICAL, only the third statement will print.  
