@@ -1,11 +1,14 @@
 
 # directories
+build/
+dist/
 __pycache__/
-
+.git/
 
 
 # files
-test.log
+*.log
 *.code-workspace
 *.backup
+*.egg-info
 

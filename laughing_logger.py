@@ -1,5 +1,8 @@
 # laughing_logger.py - A Python script to set up logging for your own python scripts.
-# Depends on the logging module.  
+# laughing_logger.py
+# Python script to easily set up logging with a console logger and file logger.
+# Includes custom log levels and formatting.
+# Depends on the logging module and the enum module.  
 
 # Copyright 2023 by Ross Lovell.  All Rights Reserved.
 # Permission to use, copy, modify, and distribute this software and its
@@ -17,32 +20,10 @@
 # OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
-
-# The laughing_logger.py depends upon the logging module.  
-# The logging module is part of the standard library.
-# The logging module's license must be honored if you use this code.
-
-# copy of logging module's license:
-# Copyright 2001-2019 by Vinay Sajip. All Rights Reserved.
-#
-# Permission to use, copy, modify, and distribute this software and its
-# documentation for any purpose and without fee is hereby granted,
-# provided that the above copyright notice appear in all copies and that
-# both that copyright notice and this permission notice appear in
-# supporting documentation, and that the name of Vinay Sajip
-# not be used in advertising or publicity pertaining to distribution
-# of the software without specific, written prior permission.
-# VINAY SAJIP DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
-# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
-# VINAY SAJIP BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
-# ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
-# IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
-# OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-    
-
 # Let's get into it, shall we?   Ha Ha Ha!!!!
 import logging
 from enum import Enum
+from pathlib import Path
 
 
 class LaughingLogLevel(Enum):
@@ -51,10 +32,10 @@ class LaughingLogLevel(Enum):
     LaughingLogLevel.{DEBUG, INFO, WARNING, ERROR, CRITICAL} 
     are equivalent to logging.{DEBUG, INFO, WARNING, ERROR, CRITICAL}
     """
-    DEBUG = 10
-    INFO = 20 
-    WARNING = 30
-    ERROR = 40
+    DEBUG    = 10
+    INFO     = 20 
+    WARNING  = 30
+    ERROR    = 40
     CRITICAL = 50
     
     def __int__(self):
@@ -80,8 +61,11 @@ def set_up_my_logging(script_name: str, console_log_level: int, file_log_level: 
     """
     
     # convert console_log_level and file_log_level to int
-    console_log_level = int(console_log_level)
-    file_log_level = int(file_log_level)
+    if not isinstance(console_log_level, int):
+        console_log_level = int(console_log_level)
+    
+    if not isinstance(file_log_level, int):
+        file_log_level = int(file_log_level)
 
 
     # Initialize logging filters
@@ -105,14 +89,38 @@ def set_up_my_logging(script_name: str, console_log_level: int, file_log_level: 
     return console_logger, file_logger
 
 if __name__ == '__main__':
-    """ call the logging function.  
-    Arguments:  calling script name, console_log_level, file_log_level, logfile
-    Log_level choices: logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL"""
+    """ 
+    Call laughing_logger.set_up_my_logging(parameters) from within your script.  
+    Arguments:  calling script name: str
+                console log level: LaughingLogLevel.{DEBUG, INFO, WARNING, ERROR, CRITICAL}
+                file log level: LaughingLogLevel.{DEBUG, INFO, WARNING, ERROR, CRITICAL}
+                logfile: str
     
-    #add the following line to your program.
-    console_logger, file_logger = set_up_my_logging("laughing_logger.py", LaughingLogLevel.DEBUG, LaughingLogLevel.INFO, "test.log")
+    Calling Script Name:  This should be the name of the script you are writing.  It will be used in the log file to help trace where the log message came from.
+    Console log level:  This is the log level for the console logger.  The console logger is the logger that prints to the console.  
+                        The console logger will print to the console regardless of the log level set for the file logger.
+    File log level:  This is the log level for the file logger.  The file logger will print to the file regardless of the log level set for the console logger.
+    Logfile:  This is the name of the log file.  The file logger will write to the file if the path is writable by the user.  If the path is not writable, the file logger will not write to the file.
+    Log_level choices:  Each of your two loggers has its reporting detail set in the instantiation of the loggers:
+    
+    This Logging Level:         will print all log messages with its level and all higher levels
+    DEBUG                       PRINTS DEBUG, INFO, WARNING, ERROR, CRITICAL
+    INFO                        PRINTS        INFO, WARNING, ERROR, CRITICAL
+    WARNING                     PRINTS              WARNING, ERROR, CRITICAL
+    ERROR                       PRINTS                       ERROR, CRITICAL
+    CRITICAL                    PRINTS                              CRITICAL
+                 
+    # Examples:
+    console_logger, file_logger = laughing_logger.set_up_my_logging("your_script_name.py", LaughingLogLevel.DEBUG, LaughingLogLevel.INFO, "my_logfile.txt")
+    
+    or use the os module to report the calling script name for you.
+    console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__), LaughingLogLevel.ERROR, LaughingLogLevel.CRITICAL, "my_logfile.txt")
+    """
 
-    # Example loggers to use in your code
+    logfile = Path("hahahahaha.log")
+    console_logger, file_logger = set_up_my_logging("laughing_logger.py", LaughingLogLevel.DEBUG, LaughingLogLevel.INFO, logfile)
+
+    # Example logging statements to use in your code:
     console_logger.debug("This debug msg will appear on the console.")
     console_logger.info("This info msg will appear on the console.")
     console_logger.warning("This warning msg will appear on the console.")
@@ -124,4 +132,6 @@ if __name__ == '__main__':
     file_logger.warning("This warning msg will appear in the log file.")
     file_logger.error("This error msg will appear in the log file.")
     file_logger.critical("This critical msg will appear in the log file.")
+
+
     
