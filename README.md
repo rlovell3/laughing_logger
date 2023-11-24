@@ -6,18 +6,18 @@ You need a few imports to really get your logging config down to one line.  Here
 import laughing-logger
 import os
 ```
-You can remove __import os__ depending on how you deal with passing the name of your calling script to the setup function.  See **test_logging.py** for complete details.  
+You can remove __import os__ depending on how you deal with passing the name of your calling script to the setup function.  See __test_logging.py__ for complete details.  
 
 ### Usage
-After your imports, simply enter this one-liner to set up your entire logging framework:   
+After your imports, simply enter this one-liner to set up your entire logging framework:  
 ```python
 console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__), laughing_logger.LaughingLogLevel.DEBUG, laughing_logger.LaughingLogLevel.ERROR, "test.log")
 
 ```
 
 The one-liner gives you two loggers:  
-- console_logger for logging to the console
-- file_logger for logging to a file
+- "console_logger" for logging to the console
+- "file_logger" for logging to a file
 
 Adjustable Logging levels (in order of detail):
 - logging.DEBUG     Max detail
@@ -26,7 +26,7 @@ Adjustable Logging levels (in order of detail):
 - logging.ERROR     You probably won't ever need this one  (HA HA HAHAAAAAA.....)
 - logging.CRITICAL  The most quiet setting.  You really don't like feedback, do you?  
 
-Set each logger in the one-line setup command to the detail levels you want while coding.  I use DEBUG initially. Later, once you code is ready for production, bump up the logging levels to capture only the detail you need.  
+Set each logger in the one-line setup command to the detail levels you want while coding.  I use DEBUG initially. Later, once code is ready for production, bump up the logging levels to capture only the detail you need.  
 
 You only need to change the one-line setup to adjust the all your logging output.  
 

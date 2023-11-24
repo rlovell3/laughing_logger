@@ -6,4 +6,6 @@ __pycache__/
 
 # files
 test.log
+*.code-workspace
+*.backup
 
