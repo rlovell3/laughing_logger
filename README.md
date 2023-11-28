@@ -9,7 +9,6 @@ import os
 You can remove "__import os__" depending on how you deal with passing the name of your calling script to the setup function.  See __test_logging.py__ for complete details.  
 
 
-
 ## Usage
 After your imports, simply enter this one-liner to set up your entire logging framework:  
 ```python
@@ -27,7 +26,7 @@ Adjustable Logging levels (in order of detail):
 - "INFO"      a bit less detail
 - "WARNING"   even less detail
 - "ERROR"  You probably won't ever need this one  (HA HA HAHAAAAAA.....)
-- "CRITICAL"	The most quiet setting.  You really don't like feedback, do you?  
+- "CRITICAL"  The most quiet setting.  You really don't like feedback, do you?  
 
 Set the two loggers in the one-line instantiation to the detail levels you want while coding.  I use DEBUG initially. Later, once code is ready for production, bump up the logging levels to capture only the detail you need, like "__INFO__" or "__CRITICAL__".  
 
@@ -63,7 +62,7 @@ You don't need to pip install this or anything else for that matter.  You actual
 Simply create a directory somewhere convenient, and add it to your PYTHONPATH environment variable.  
 Then, when you drop this project into it, it will be available throughout your system, whether you are using a virtual environment or your basic system.  
 
-I recommend putting all your own tools and code libraries in there. 
+I recommend putting all your own tools and code libraries in there.  
 
 Example: create a directory named "pythonpath_stuff".  
 `mkdir /path/to/pythonpath_stuff`  
@@ -72,11 +71,21 @@ Add it to your path variable:
 `export PYTHONPATH=$PYTHONPATH:/path/to/pythonpath_stuff`  
 
 ## Persistence
-You need the PYTHONPATH to persist, so either add the export statement to your "__~/.bashrc__" or similar file, or for absolute supreme persistence and availability, add it to the "__/etc/environment__" file! Yeah, baby.  
+You need the PYTHONPATH to persist, so either add the export statement to your "__~/.bashrc__" or similar file, or for absolute supreme persistence and availability, add it to the "__/etc/environment__" file.  
 
-See **sample_logging.py** for a complete example of importing, setting up, and using.  
-HA HA HA HAHAAAAAA...
+See __sample_logging.py__ for a complete example of importing, setting up, and using.  
 
+## Additional Notes  
+For the record, I don't code my logging statement on one line.  I prefer to format it like this:  
+```python
+console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__),  
+        laughing_logger.LaughingLogLevel.DEBUG,  
+        laughing_logger.LaughingLogLevel.ERROR,  
+        "test.log"  
+        )
 
+```
 
+Kudos to you for coding.  Most people never try.  
 
+HA HA HA HAHAAAAAA...  
