@@ -3,7 +3,7 @@
 
 You need a few imports to really get your logging config down to one line.  Here they are:
 ```python
-import laughing-logger
+import laughing_logger
 import os
 ```
 You can remove "__import os__" depending on how you deal with passing the name of your calling script to the setup function.  See __test_logging.py__ for complete details.  
