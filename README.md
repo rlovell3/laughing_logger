@@ -78,14 +78,12 @@ See __sample_logging.py__ for a complete example of importing, setting up, and u
 ## Additional Notes  
 For the record, I don't code my logging statement on one line.  I prefer to format it like this:  
 ```python
-console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__),  
-        laughing_logger.LaughingLogLevel.DEBUG,  
-        laughing_logger.LaughingLogLevel.ERROR,  
-        "test.log"  
-        )
-
+console_logger, file_logger = laughing_logger.set_up_my_logging(
+    os.path.basename(__file__),  
+    laughing_logger.LaughingLogLevel.DEBUG,  
+    laughing_logger.LaughingLogLevel.ERROR,  
+    "test.log"  
+)
 ```
-
-Kudos to you for coding.  Most people never try.  
 
 HA HA HA HAHAAAAAA...  

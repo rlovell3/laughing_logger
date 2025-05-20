@@ -4,7 +4,7 @@
 # Includes custom log levels and formatting.
 # Depends on the logging module and the enum module.  
 
-# Copyright 2023 by Ross Lovell.  All Rights Reserved.
+# Copyright 2023-Present by Ross Lovell.  All Rights Reserved.
 # Permission to use, copy, modify, and distribute this software and its
 # documentation for any purpose and without fee is hereby granted,
 # provided that the above copyright notice appear in all copies and that
@@ -24,7 +24,7 @@
 import logging
 from enum import Enum
 from pathlib import Path
-
+from typing import Union
 
 class LaughingLogLevel(Enum):
     """
@@ -38,21 +38,21 @@ class LaughingLogLevel(Enum):
     ERROR    = 40
     CRITICAL = 50
     
-    def __int__(self):
+    def __int__(self) -> int:
         return self.value
 
 
 class ScriptNameFilter(logging.Filter):
     """Class to inject script_name into log records"""
-    def __init__(self, script_name):
+    def __init__(self, script_name: str)-> None:
         self.script_name = script_name
 
-    def filter(self, record):
+    def filter(self, record: logging.LogRecord) -> bool:
         record.script_name = self.script_name
         return True
 
 # Function to set up logging
-def set_up_my_logging(script_name: str, console_log_level: int, file_log_level: int, logfile: str) -> tuple[logging.Logger, logging.Logger]:
+def set_up_my_logging(script_name: str, console_log_level: Union[LaughingLogLevel, int], file_log_level: Union[LaughingLogLevel, int], logfile: Union[str, Path]) -> tuple[logging.Logger, logging.Logger]:
     """Function to set up logging
     Arguments:  script_name, console_log_level, file_log_level, logfile
     LOGGING choices: logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL
@@ -60,28 +60,35 @@ def set_up_my_logging(script_name: str, console_log_level: int, file_log_level: 
     Usage:  console_logger, file_logger = set_up_my_logging(os.path.basename(__file__), logging.DEBUG, logging.INFO, "test.log")
     """
     
-    # convert console_log_level and file_log_level to int
-    if not isinstance(console_log_level, int):
-        console_log_level = int(console_log_level)
-    
-    if not isinstance(file_log_level, int):
-        file_log_level = int(file_log_level)
+    # Determine the integer value for console_log_level
+    actual_console_level: int
+    if isinstance(console_log_level, LaughingLogLevel):
+        actual_console_level = int(console_log_level)
+    else: # It's already an int, as per Union[LaughingLogLevel, int]
+        actual_console_level = console_log_level
+
+    # Determine the integer value for file_log_level
+    actual_file_level: int
+    if isinstance(file_log_level, LaughingLogLevel):
+        actual_file_level = int(file_log_level)
+    else: # It's already an int
+        actual_file_level = file_log_level
 
 
     # Initialize logging filters
     script_name_filter = ScriptNameFilter(script_name)
     # Create and configure console logger
     console_logger = logging.getLogger("console_logger")
-    console_logger.setLevel(console_log_level)
-    console_handler = logging.StreamHandler()
+    console_logger.setLevel(actual_console_level)
+    console_handler: logging.Handler = logging.StreamHandler()
     console_handler.addFilter(script_name_filter)
     console_handler.setFormatter(logging.Formatter('%(asctime)s - %(script_name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M'))
     console_logger.addHandler(console_handler)
     
     # Create and configure file logger
     file_logger = logging.getLogger("file_logger")
-    file_logger.setLevel(file_log_level)
-    file_handler = logging.FileHandler(logfile)
+    file_logger.setLevel(actual_file_level)
+    file_handler: logging.Handler = logging.FileHandler(logfile)
     file_handler.addFilter(script_name_filter)
     file_handler.setFormatter(logging.Formatter('%(asctime)s - %(script_name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M'))
     file_logger.addHandler(file_handler)
@@ -117,8 +124,13 @@ if __name__ == '__main__':
     console_logger, file_logger = laughing_logger.set_up_my_logging(os.path.basename(__file__), LaughingLogLevel.ERROR, LaughingLogLevel.CRITICAL, "my_logfile.txt")
     """
 
-    logfile = Path("hahahahaha.log")
-    console_logger, file_logger = set_up_my_logging("laughing_logger.py", LaughingLogLevel.DEBUG, LaughingLogLevel.INFO, logfile)
+    logfile_path: Path = Path("hahahahaha.log")
+    console_logger, file_logger = set_up_my_logging(
+        "laughing_logger.py", 
+        LaughingLogLevel.DEBUG, 
+        LaughingLogLevel.INFO, 
+        logfile_path
+    )
 
     # Example logging statements to use in your code:
     console_logger.debug("This debug msg will appear on the console.")
